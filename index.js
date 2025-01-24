@@ -1,13 +1,20 @@
+const dotenv = require("dotenv");
+dotenv.config(); 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const express = require("express");
 const cors = require("cors");
-const dotenv = require("dotenv");
-dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    'https://localhost:5173',
+    'https://brandsports-6c31c.web.app',
+    'https://brandsports-6c31c.firebaseapp.com',
+  ]
+
+}));
 app.use(express.json());
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.kzh2i.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
@@ -26,9 +33,9 @@ const EquipmentCollection = database.collection("Equipment");
 async function connectToMongo() {
   try {
     // await client.connect();
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
+    // console.log(
+      // "Pinged your deployment. You successfully connected to MongoDB!"
+    // );
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
   }
